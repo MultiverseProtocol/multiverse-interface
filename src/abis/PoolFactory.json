@@ -1,0 +1,64 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pool",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
+    ],
+    "name": "NewPoolCreated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "priceOracle",
+        "type": "address"
+      },
+      {
+        "internalType": "address[]",
+        "name": "assets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint8[]",
+        "name": "assetDecimals",
+        "type": "uint8[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "interestRateStrategy",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ltv",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "liquidationThreshold",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "liquidationBonus",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "deployPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
