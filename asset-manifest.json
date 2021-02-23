@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.ac21d042.chunk.css",
-    "main.js": "/static/js/main.f44fa0e8.chunk.js",
-    "main.js.map": "/static/js/main.f44fa0e8.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.32c5eca0.js",
-    "runtime-main.js.map": "/static/js/runtime-main.32c5eca0.js.map",
-    "static/css/2.658248ec.chunk.css": "/static/css/2.658248ec.chunk.css",
-    "static/js/2.80f35692.chunk.js": "/static/js/2.80f35692.chunk.js",
-    "static/js/2.80f35692.chunk.js.map": "/static/js/2.80f35692.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.658248ec.chunk.css.map": "/static/css/2.658248ec.chunk.css.map",
-    "static/css/main.ac21d042.chunk.css.map": "/static/css/main.ac21d042.chunk.css.map",
-    "static/js/2.80f35692.chunk.js.LICENSE.txt": "/static/js/2.80f35692.chunk.js.LICENSE.txt",
-    "static/media/metamask.c4a26d3b.png": "/static/media/metamask.c4a26d3b.png"
+    "main.css": "/multiverse-interface/static/css/main.ac21d042.chunk.css",
+    "main.js": "/multiverse-interface/static/js/main.f44fa0e8.chunk.js",
+    "main.js.map": "/multiverse-interface/static/js/main.f44fa0e8.chunk.js.map",
+    "runtime-main.js": "/multiverse-interface/static/js/runtime-main.b1868f27.js",
+    "runtime-main.js.map": "/multiverse-interface/static/js/runtime-main.b1868f27.js.map",
+    "static/css/2.658248ec.chunk.css": "/multiverse-interface/static/css/2.658248ec.chunk.css",
+    "static/js/2.773a4c01.chunk.js": "/multiverse-interface/static/js/2.773a4c01.chunk.js",
+    "static/js/2.773a4c01.chunk.js.map": "/multiverse-interface/static/js/2.773a4c01.chunk.js.map",
+    "index.html": "/multiverse-interface/index.html",
+    "static/css/2.658248ec.chunk.css.map": "/multiverse-interface/static/css/2.658248ec.chunk.css.map",
+    "static/css/main.ac21d042.chunk.css.map": "/multiverse-interface/static/css/main.ac21d042.chunk.css.map",
+    "static/js/2.773a4c01.chunk.js.LICENSE.txt": "/multiverse-interface/static/js/2.773a4c01.chunk.js.LICENSE.txt",
+    "static/media/metamask.c4a26d3b.png": "/multiverse-interface/static/media/metamask.c4a26d3b.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.32c5eca0.js",
+    "static/js/runtime-main.b1868f27.js",
     "static/css/2.658248ec.chunk.css",
-    "static/js/2.80f35692.chunk.js",
+    "static/js/2.773a4c01.chunk.js",
     "static/css/main.ac21d042.chunk.css",
     "static/js/main.f44fa0e8.chunk.js"
   ]
