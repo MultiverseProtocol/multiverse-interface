@@ -90,7 +90,7 @@ export default function CreatePool() {
                 msg: error,
             });
         } else {
-            
+
             handleCreatePool(
                 assetArray,
                 ltvArray,
@@ -227,13 +227,19 @@ export default function CreatePool() {
                                 You can't use these features without Metamask.
                                 <br />
                                 Please install
-                                <Image width="50px" src={metamask}></Image>
+                                <Image
+                                    width="50px"
+                                    src={metamask}
+                                ></Image>
                                 first !!
                             </div>
                             :
                             <div>
                                 Please connect to
-                                <Image width="50px" src={metamask}></Image>
+                                <Image
+                                    width="50px"
+                                    src={metamask}
+                                ></Image>
                                 to use this feature !!
                             </div>
                         }
@@ -362,7 +368,6 @@ export default function CreatePool() {
                                     </Row>
                                 </>
                             ))}
-
 
                             {/* <Row style={{ marginBottom: "20px" }}>
                                 <Col className="text-header">

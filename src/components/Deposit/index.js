@@ -79,7 +79,11 @@ export default function Deposit({
             contractInstance.methods.deposit
                 (
                     asset,
-                    await precision.add(amount, decimals),
+                    window.web3.utils.toBN(
+                        await precision.add(
+                            amount, decimals
+                        )
+                    ),
                     window.userAddress
                 ).send({ from: window.userAddress })
                 .on('transactionHash', () => {
@@ -105,9 +109,11 @@ export default function Deposit({
             erc20Instance.methods.approve
                 (
                     poolAddress,
-                    await precision.add(
-                        MAX_APPROVE_AMOUNT,
-                        decimals
+                    window.web3.utils.toBN(
+                        await precision.add(
+                            MAX_APPROVE_AMOUNT,
+                            decimals
+                        )
                     )
                 )
                 .send({ from: window.userAddress })
@@ -158,7 +164,11 @@ export default function Deposit({
     return (
         <Modal show={true} onHide={onCancel} size="sm" centered>
             <Modal.Header>
-                <Modal.Title className="mx-auto">Deposit Asset</Modal.Title>
+                <Modal.Title
+                    className="mx-auto"
+                >
+                    Deposit Asset
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div>

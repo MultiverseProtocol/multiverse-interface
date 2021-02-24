@@ -80,7 +80,11 @@ export default function Repay({
             contractInstance.methods.repay
                 (
                     asset,
-                    await precision.add(amount, decimals),
+                    window.web3.utils.toBN(
+                        await precision.add(
+                            amount, decimals
+                        )
+                    ),
                     window.userAddress
                 ).send({ from: window.userAddress })
                 .on('transactionHash', () => {
@@ -155,7 +159,11 @@ export default function Repay({
     return (
         <Modal show={true} onHide={onCancel} size="sm" centered>
             <Modal.Header>
-                <Modal.Title className="mx-auto">Repay Asset</Modal.Title>
+                <Modal.Title
+                    className="mx-auto"
+                >
+                    Repay Asset
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div>

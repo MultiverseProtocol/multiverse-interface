@@ -28,7 +28,7 @@ export default function Header() {
         <div>
             <Navbar collapseOnSelect bg="light" variant="light">
                 <Navbar.Brand href="#">
-                    <Image width="100px" src={logo} />
+                    <Image width="110px" src={logo} />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Nav className="mr-auto">

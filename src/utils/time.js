@@ -16,12 +16,23 @@ const getTimeInString = (unixTimestamp) => {
 const getRemaingTime = (future) => {
     const distance = Number(future) - currentUnixTime();
 
-    const days = Math.floor(distance / (60 * 60 * 24));
-    const hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
-    const minutes = Math.floor((distance % (60 * 60)) / (60));
-    const seconds = Math.floor((distance % (60)));
+    const days = Math.floor(
+        distance / (60 * 60 * 24)
+    );
+    const hours = Math.floor(
+        (distance % (60 * 60 * 24)) / (60 * 60)
+    );
+    const minutes = Math.floor(
+        (distance % (60 * 60)) / (60)
+    );
+    const seconds = Math.floor(
+        (distance % (60))
+    );
 
-    return days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    return days + "d " +
+        hours + "h " +
+        minutes + "m " +
+        seconds + "s";
 };
 
 export const time = {

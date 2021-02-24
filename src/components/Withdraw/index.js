@@ -49,7 +49,11 @@ export default function Withdraw({
         contractInstance.methods.withdraw
             (
                 asset,
-                await precision.add(amount, decimals),
+                window.web3.utils.toBN(
+                    await precision.add(
+                        amount, decimals
+                    )
+                ),
                 window.userAddress
             ).send({ from: window.userAddress })
             .on('transactionHash', () => {
@@ -100,7 +104,11 @@ export default function Withdraw({
     return (
         <Modal show={true} onHide={onCancel} size="sm" centered>
             <Modal.Header>
-                <Modal.Title className="mx-auto">Withdraw Asset</Modal.Title>
+                <Modal.Title
+                    className="mx-auto"
+                >
+                    Withdraw Asset
+                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div>

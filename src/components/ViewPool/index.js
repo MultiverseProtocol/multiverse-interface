@@ -86,7 +86,10 @@ export default function ViewPool() {
                     {/* <Card className="hidden-card"></Card> */}
 
                     <Card className="mx-auto view-pool-card">
-                        <Card.Body style={{ textAlign: "left", fontWeight: "bold" }}>
+                        <Card.Body style={{
+                            textAlign: "left",
+                            fontWeight: "bold"
+                        }}>
                             <p className="view-pool-header">
                                 <u>Lending Pool</u>
                             </p>

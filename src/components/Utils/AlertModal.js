@@ -16,7 +16,9 @@ export default function AlertModal({
             animation={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Opps!! Error...</Modal.Title>
+                <Modal.Title>
+                    Opps!! Error...
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>{children}</Modal.Body>
             <Modal.Footer>

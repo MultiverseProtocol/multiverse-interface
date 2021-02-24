@@ -49,7 +49,11 @@ export default function Withdraw({
         contractInstance.methods.borrow
             (
                 asset,
-                await precision.add(amount, decimals),
+                window.web3.utils.toBN(
+                    await precision.add(
+                        amount, decimals
+                    )
+                ),
                 window.userAddress
             ).send({ from: window.userAddress })
             .on('transactionHash', () => {
@@ -100,7 +104,11 @@ export default function Withdraw({
     return (
         <Modal show={true} onHide={onCancel} size="sm" centered>
             <Modal.Header>
-                <Modal.Title className="mx-auto">Borrow Asset</Modal.Title>
+                <Modal.Title
+                    className="mx-auto"
+                >
+                    Borrow Asset
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div>
@@ -114,7 +122,9 @@ export default function Withdraw({
                                 value={amount}
                                 placeholder="Amount"
                                 onChange={(event) => {
-                                    setAmount(event.target.value)
+                                    setAmount(
+                                        event.target.value
+                                    )
                                 }}
                             />
                         </Form.Group>

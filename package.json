@@ -1,7 +1,7 @@
 {
   "name": "multiverse-interface",
   "version": "0.1.0",
-  "homepage": "https://multiverseprotocol.github.io/multiverse-interface/",
+  "homepage": "https://multiverseprotocol.github.io/",
   "dependencies": {
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
