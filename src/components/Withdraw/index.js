@@ -131,8 +131,7 @@ export default function Withdraw({
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="primary"
-                    size="lg"
+                    variant="success"
                     className="font-weight-bold text-uppercase"
                     onClick={handleSubmit}
                 >

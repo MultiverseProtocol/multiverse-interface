@@ -16,6 +16,7 @@ import Deposit from "../Deposit";
 import Borrow from "../Borrow";
 import { time } from "../../utils/time";
 import { etherscanLink } from "../../utils/constants";
+import AddAsset from "../AddAsset";
 
 export default function ViewPool() {
     let routes;
@@ -38,7 +39,7 @@ export default function ViewPool() {
     const [selectedAsset, setSelectedAsset] = useState("");
     const [depositModalOpen, setDepositModalOpen] = useState(false);
     const [borrowModalOpen, setBorrowModalOpen] = useState(false);
-    // const testTokenAddr = "0x5E72A6994B2F8b10501cd1d599859f626dAdE5d0";
+    const [addAssetModalOpen, setAddAssetModalOpen] = useState(false);
 
     const fetchContractData = async () => {
         try {
@@ -95,14 +96,14 @@ export default function ViewPool() {
                             </p>
 
                             <Row>
-                                <Col>
+                                <Col className="col-2">
                                     <span>Total Reserves : </span>
                                     <span >
                                         {state.reserves.length}
                                     </span>
                                 </Col>
 
-                                <Col>
+                                <Col className="col-2">
                                     <span>Status : </span>
                                     <span className="info-message">
                                         {state.status === "UNPAUSED" ?
@@ -133,6 +134,23 @@ export default function ViewPool() {
                                         {state.creator.substr(27, 42)}
                                     </a>
                                 </Col>
+
+                                <Col
+                                    className="col-2"
+                                    style={{
+                                        textAlign: "right",
+                                        color: "green",
+                                    }}
+                                >
+                                    <Button
+                                        size="sm"
+                                        variant="warning"
+                                        onClick={() => setAddAssetModalOpen(true)}
+                                        disabled={!window.userAddress ? true : false}
+                                    >
+                                        Add Asset
+                                    </Button>
+                                </Col>
                             </Row>
 
                             <Table
@@ -150,6 +168,10 @@ export default function ViewPool() {
                                         <th>Total Borrowed</th>
                                         <th>Deposit APY</th>
                                         <th>Borrow APR</th>
+                                        <th>Borrowing Enabled</th>
+                                        <th>Loan To Value</th>
+                                        <th>Liq Threshold</th>
+                                        <th>Liq Bonus</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -158,21 +180,39 @@ export default function ViewPool() {
                                     {state.reserves.map((reserve, index) => (
                                         <tr key={`reserve-row-${index}`}>
                                             <td>{reserve.assetName} (
-                                                    <a
+                                                <a
                                                     className="links"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     href={`${etherscanLink}/address/${reserve.asset}`}
                                                 >
-                                                    {state.creator.substr(0, 5)}
-                                                            .....
-                                                        {state.creator.substr(37, 42)}
+                                                    {reserve.asset.substr(0, 5)}
+                                                        .....
+                                                    {reserve.asset.substr(37, 42)}
                                                 </a>
                                                 )</td>
                                             <td>{reserve.availableLiquidity}</td>
                                             <td>{reserve.totalBorrow}</td>
                                             <td>{Number(reserve.liquidityRate).toFixed(4)}</td>
                                             <td>{Number(reserve.borrowRate).toFixed(4)}</td>
+                                            <td>{reserve.isBorrowingEnabled ? "Yes" : "No"}</td>
+                                            <td>
+                                                {reserve.isBorrowingEnabled ?
+                                                    <span>{Number(reserve.ltv) / 100} %</span> :
+                                                    <span> - </span>
+                                                }
+                                            </td>
+                                            <td>{reserve.isBorrowingEnabled ?
+                                                <span>{Number(reserve.liquidationThreshold) / 100} %</span> :
+                                                <span> - </span>
+                                            }</td>
+                                            <td>{reserve.isBorrowingEnabled ?
+                                                <span>{(
+                                                    Number(reserve.liquidationBonus) / 100
+                                                ) - 100} %
+                                                </span> :
+                                                <span> - </span>
+                                            }</td>
                                             <td>
                                                 <Button
                                                     size="sm"
@@ -190,7 +230,7 @@ export default function ViewPool() {
                                                     }
                                                 >
                                                     Deposit
-                                                    </Button>
+                                                </Button>
                                             </td>
                                             <td>
                                                 <Button
@@ -209,7 +249,7 @@ export default function ViewPool() {
                                                     }
                                                 >
                                                     Borrow
-                                                    </Button>
+                                                </Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -220,7 +260,6 @@ export default function ViewPool() {
 
                     {/* <Card className="hidden-card"></Card> */}
                 </CardDeck>
-
 
                 <AlertModal
                     open={errorModal.open}
@@ -261,6 +300,19 @@ export default function ViewPool() {
                         onCancel={() => setBorrowModalOpen(false)}
                         onConfirm={() => {
                             setBorrowModalOpen(false);
+                            fetchContractData();
+                        }}
+                    />
+                    : null
+                }
+
+                {addAssetModalOpen ?
+                    <AddAsset
+                        poolAddress={poolAddress}
+                        creator={state.creator}
+                        onCancel={() => setAddAssetModalOpen(false)}
+                        onConfirm={() => {
+                            setAddAssetModalOpen(false);
                             fetchContractData();
                         }}
                     />

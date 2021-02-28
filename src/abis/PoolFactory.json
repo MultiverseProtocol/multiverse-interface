@@ -19,12 +19,20 @@
     "type": "event"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "FACTORY_REVISION",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "priceOracle",
-        "type": "address"
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "address[]",
         "name": "assets",
@@ -57,6 +65,19 @@
       }
     ],
     "name": "deployPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPoolFactoryProxy",
+        "name": "_proxy",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

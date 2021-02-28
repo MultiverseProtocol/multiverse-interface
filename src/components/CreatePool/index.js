@@ -11,19 +11,16 @@ import {
     Image,
     Button,
     CardDeck,
-    // Dropdown,
-    // DropdownButton,
+    Dropdown,
+    DropdownButton,
 } from "react-bootstrap";
 import {
-    defaultPriceOracle,
     defaultInterestRateStrategyAddress,
 } from "../../utils/constants";
 import * as Erc20Abi from "../../abis/Erc20Abi.json";
+import { assets } from "../../utils/assets";
 
 export default function CreatePool() {
-    // asset1: "0x4548Bee51e07746317E90fb2C89050164F078186",
-    // asset2: "0x5E72A6994B2F8b10501cd1d599859f626dAdE5d0",
-
     const [processing, setProcessing] = useState(false);
     const [poolState, setPoolState] = useState({
         reserves: [{
@@ -90,7 +87,6 @@ export default function CreatePool() {
                 msg: error,
             });
         } else {
-
             handleCreatePool(
                 assetArray,
                 ltvArray,
@@ -108,19 +104,8 @@ export default function CreatePool() {
         liquidationThresholdArray,
         interestRateStrategyArray,
     ) => {
-        console.log(
-            defaultPriceOracle,
-            assetArray,
-            await getTokenDecimals(assetArray),
-            interestRateStrategyArray,
-            ltvArray,
-            liquidationThresholdArray,
-            liquidationBonusArray,
-        );
-
         window.poolFactory.methods
             .deployPool(
-                defaultPriceOracle,
                 assetArray,
                 await getTokenDecimals(assetArray),
                 interestRateStrategyArray,
@@ -138,7 +123,7 @@ export default function CreatePool() {
                     open: true,
                     msg: "Congratulations 🎉 !! " +
                         "Pool successfully created !! " +
-                        "Within 2 minutes you will be able to " +
+                        "Within few minutes you will be able to " +
                         "see created pool on the dashboard.",
                 });
             })
@@ -187,6 +172,12 @@ export default function CreatePool() {
         setPoolState({ ...poolState, reserves: array });
     }
 
+    const handleSelect = (i, value) => {
+        let array = [...poolState.reserves];
+        array[i] = { ...array[i], "asset": value };
+        setPoolState({ ...poolState, reserves: array });
+    }
+
     const addClick = () => {
         setPoolState({
             ...poolState,
@@ -194,7 +185,7 @@ export default function CreatePool() {
                 [
                     ...poolState.reserves,
                     {
-                        address: "",
+                        asset: "",
                         ltv: "",
                         liquidationThreshold: "",
                         liquidationBonus: ""
@@ -212,7 +203,7 @@ export default function CreatePool() {
     }, []);
 
     return (
-        <div>
+        <div style={{ paddingBottom: "8%" }}>
             {showMetamaskError ?
                 <AlertModal
                     open={showMetamaskError}
@@ -274,22 +265,34 @@ export default function CreatePool() {
 
                                     <Row key={"config-row" + i}>
                                         <Col>
-                                            <Row style={{ marginTop: "10px" }}>
+                                            <Row style={{ marginTop: "10px", marginBottom: "40px" }}>
                                                 <Col className="text-header">
-                                                    Token Address:
+                                                    Token:
                                                 </Col>
 
                                                 <Col style={{ paddingLeft: "0px" }}>
-                                                    <Form.Control
-                                                        className="mb-4"
-                                                        style={{ width: "80%" }}
-                                                        type="text"
-                                                        placeholder="Address of the Token"
+                                                    <DropdownButton
+                                                        style={{
+                                                            position: "absolute",
+                                                        }}
+                                                        title={assets.map((element) => (
+                                                            poolState.reserves[i].asset === element.address ?
+                                                                element.symbol
+                                                                : null
+                                                        ))}
+                                                        variant="outline-info"
                                                         name="asset"
-                                                        maxLength="46"
-                                                        onChange={(e) => handleChange(i, e)}
-                                                        value={el.key}
-                                                    />
+                                                        onSelect={(e) => handleSelect(i, e)}
+                                                    >
+                                                        {assets.map((element, key) => (
+                                                            <Dropdown.Item
+                                                                key={key}
+                                                                eventKey={element.address}
+                                                            >
+                                                                {element.symbol}
+                                                            </Dropdown.Item>
+                                                        ))}
+                                                    </DropdownButton>
                                                 </Col>
                                             </Row>
 
@@ -368,38 +371,6 @@ export default function CreatePool() {
                                     </Row>
                                 </>
                             ))}
-
-                            {/* <Row style={{ marginBottom: "20px" }}>
-                                <Col className="text-header">
-                                    Lending Pool:
-                            </Col>
-                                <Col style={{ paddingLeft: "0px" }}>
-                                    <DropdownButton
-                                        style={{
-                                            position: "absolute",
-                                        }}
-                                        title={lendingPool.map((element) => (
-                                            addPoolState.token === element.token ?
-                                                element.pool
-                                                : null
-                                        ))}
-                                        variant="outline-info"
-                                        onSelect={(e) => setAddPoolState({
-                                            ...addPoolState,
-                                            token: e
-                                        })}
-                                    >
-                                        {lendingPool.map((element, key) => (
-                                            <Dropdown.Item
-                                                key={key}
-                                                eventKey={element.token}
-                                            >
-                                                {element.pool}
-                                            </Dropdown.Item>
-                                        ))}
-                                    </DropdownButton>
-                                </Col>
-                            </Row> */}
                         </Card.Body>
 
                         <Card.Footer className="text-center">

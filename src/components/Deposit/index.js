@@ -162,7 +162,13 @@ export default function Deposit({
     }, []);
 
     return (
-        <Modal show={true} onHide={onCancel} size="sm" centered>
+        <Modal
+            show={true}
+            onHide={onCancel}
+            size="sm"
+            centered
+            animation={false}
+        >
             <Modal.Header>
                 <Modal.Title
                     className="mx-auto"
@@ -191,8 +197,7 @@ export default function Deposit({
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="primary"
-                    size="lg"
+                    variant="success"
                     className="font-weight-bold text-uppercase"
                     onClick={handleSubmit}
                 >

@@ -13,6 +13,7 @@ import ViewPool from './components/ViewPool';
 import CreatePool from './components/CreatePool';
 import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
+import Transaction from './components/Transaction';
 
 export default function App() {
     const routes = (
@@ -31,6 +32,9 @@ export default function App() {
             </Route>
             <Route path="/dashboard" exact>
                 <Dashboard />
+            </Route>
+            <Route path="/tx/:userAddress" exact>
+                <Transaction />
             </Route>
             <Redirect to="/" />
         </Switch>

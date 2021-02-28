@@ -189,3 +189,7 @@ html, body, body>div, .app {
   margin-top: 10px;
   font-size: large;
 }
+
+.modal {
+  background-color: rgba(0, 0, 0, .0001) !important;
+}

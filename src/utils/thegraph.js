@@ -7,7 +7,10 @@ const fetchLendingPools = () => {
             (`${thegraphApi}`,
                 {
                     "query": `{
-                        pools(orderBy: createdAt, orderDirection: desc) {
+                        pools(
+                            orderBy: createdAt,
+                            orderDirection: asc
+                        ) {
                             address
                             reserves {
                                 assetName
@@ -38,11 +41,16 @@ const fetchPoolInfo = (poolAddress) => {
             (`${thegraphApi}`,
                 {
                     "query": `
-                        query ($lendingPool: String!) { pools(where: {
-                            address: $lendingPool
-                        }){
+                        query ($lendingPool: String!) {
+                            pools(where: {
+                                address: $lendingPool
+                            }
+                        ){
                             address
-                            reserves {
+                            reserves(
+                                orderBy: availableLiquidity,
+                                orderDirection: desc,
+                            ) {
                                 asset
                                 availableLiquidity
                                 totalBorrow
@@ -121,8 +129,91 @@ const fetchUserReserves = (userAddress) => {
     });
 }
 
+const fetchUserPools = (userAddress) => {
+    return new Promise((resolve, reject) => {
+        axios.post
+            (`${thegraphApi}`,
+                {
+                    "query": `
+                        query ($address: String!) { 
+                            userPools(where: {
+                                user: $address
+                            }
+                        ){
+                            pool {
+                                address
+                            }
+                            healthFactor
+                        }
+                    }`,
+                    variables: {
+                        address: userAddress.toLowerCase(),
+                    }
+                }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((res) => {
+                resolve(res.data.data.userPools)
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+const fetchUserTransactions = (userAddress) => {
+    return new Promise((resolve, reject) => {
+        axios.post
+            (`${thegraphApi}`,
+                {
+                    "query": `
+                        query (
+                            $address: String!
+                        ) { 
+                            transactions(
+                                orderBy: timestamp,
+                                orderDirection: desc,
+                                where: {
+                                user: $address
+                            }
+                        ){
+                            id
+                            action
+                            amount
+                            reserve {
+                                asset
+                                assetName
+                                assetSymbol
+                            }
+                            pool {
+                                address
+                            }
+                            timestamp
+                        }
+                    }`,
+                    variables: {
+                        address: userAddress.toLowerCase(),
+                    }
+                }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((res) => {
+                resolve(res.data.data.transactions)
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
 export const thegraph = {
     fetchLendingPools,
     fetchPoolInfo,
     fetchUserReserves,
+    fetchUserTransactions,
+    fetchUserPools,
 };

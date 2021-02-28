@@ -49,11 +49,15 @@ export default function HomePage() {
                     if (name.includes(filter) ||
                         symbol.includes(filter)) {
                         return element;
+                    } else {
+                        return null;
                     }
                 });
 
                 if (value.length !== 0) {
                     return value;
+                } else {
+                    return null
                 }
             });
         } else {
@@ -137,7 +141,7 @@ export default function HomePage() {
                         type="text"
                         className="mb-1"
                         onChange={handleSearchBar}
-                        placeholder="&#128269; Try (Eg. USDC) Search using symbol"
+                        placeholder="&#128269; Try (Eg. DAI) Search using symbol"
                     />
                 </Col>
             </Row>

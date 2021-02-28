@@ -21,12 +21,6 @@
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "onBehalfOf",
-        "type": "address"
-      },
-      {
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
@@ -609,11 +603,6 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "onBehalfOf",
-        "type": "address"
       }
     ],
     "name": "borrow",
@@ -799,12 +788,12 @@
           },
           {
             "internalType": "uint128",
-            "name": "liquidityRate",
+            "name": "currentLiquidityRate",
             "type": "uint128"
           },
           {
             "internalType": "uint128",
-            "name": "borrowRate",
+            "name": "currentBorrowRate",
             "type": "uint128"
           },
           {

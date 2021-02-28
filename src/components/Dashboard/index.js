@@ -20,7 +20,7 @@ import { precision } from "../../utils/precision";
 export default function Dashboard() {
     let routes;
     const [loading, setLoading] = useState(true);
-    const [state, setState] = useState({ reserves: [] });
+    const [state, setState] = useState({ reserves: [], pools: [] });
     const [showMetamaskError, setShowMetamaskError] = useState(false);
     const [errorModal, setErrorModal] = useState({ msg: "", open: false });
     const [successModal, setSuccessModal] = useState({ msg: "", open: false });
@@ -32,42 +32,46 @@ export default function Dashboard() {
 
     const fetchContractData = async () => {
         try {
-            const result = await thegraph.fetchUserReserves(
+            const pools = await thegraph.fetchUserPools(
                 window.userAddress
             );
 
-            for (let i = 0; i < result.length; i++) {
+            const reserves = await thegraph.fetchUserReserves(
+                window.userAddress
+            );
+
+            for (let i = 0; i < reserves.length; i++) {
                 const contractInstance = new window.web3.eth.Contract(
                     LendingPool.default,
-                    result[i].pool.address,
+                    reserves[i].pool.address,
                     { from: window.userAddress }
                 );
 
                 const depositBalance = await contractInstance.methods
                     .getUserDeposit(
                         window.userAddress,
-                        result[i].reserve.asset
+                        reserves[i].reserve.asset
                     ).call();
 
                 const borrowBalance = await contractInstance.methods
                     .getUserBorrow(
                         window.userAddress,
-                        result[i].reserve.asset
+                        reserves[i].reserve.asset
                     ).call();
 
-                result[i].depositBalance = Number(
+                reserves[i].depositBalance = Number(
                     await precision.remove(
                         depositBalance,
-                        result[i].reserve.assetDecimals
+                        reserves[i].reserve.assetDecimals
                     ));
-                result[i].borrowBalance = Number(
+                reserves[i].borrowBalance = Number(
                     await precision.remove(
                         borrowBalance,
-                        result[i].reserve.assetDecimals
+                        reserves[i].reserve.assetDecimals
                     ));
             }
 
-            setState({ reserves: result });
+            setState({ pools, reserves });
             setLoading(false);
 
         } catch (error) {
@@ -152,10 +156,19 @@ export default function Dashboard() {
                         {/* <Card className="hidden-card"></Card> */}
 
                         <Card className="mx-auto view-pool-card">
-                            <Card.Body style={{ textAlign: "left", fontWeight: "bold" }}>
+                            <Card.Body style={{ fontWeight: "bold" }}>
                                 <p className="view-pool-header">
                                     <u>Your Reserves</u>
                                 </p>
+
+                                <div style={{ textAlign: "right" }}>
+                                    <Link
+                                        style={{ color: "green" }}
+                                        to={`/tx/${window.userAddress}`}
+                                    >
+                                        View Transactions
+                                    </Link>
+                                </div>
 
                                 <Table
                                     style={{
@@ -171,6 +184,7 @@ export default function Dashboard() {
                                             <th>Asset</th>
                                             <th>Deposited Balance</th>
                                             <th>Borrowed Balance</th>
+                                            <th>Health Factor</th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -185,11 +199,24 @@ export default function Dashboard() {
                                                 </Link></td>
                                                 <td>
                                                     {reserve.reserve.assetName} (
-                                                        {reserve.reserve.assetSymbol}
-                                                    )
-                                                    </td>
+                                                    {reserve.reserve.assetSymbol}
+                                                )</td>
                                                 <td>{reserve.depositBalance}</td>
                                                 <td>{reserve.borrowBalance}</td>
+                                                <td>{
+                                                    state.pools.map((element) => {
+                                                        if (
+                                                            element.pool.address.toLowerCase() ===
+                                                            reserve.pool.address.toLowerCase()
+                                                        ) {
+                                                            return Number(
+                                                                element.healthFactor
+                                                            ).toFixed(2);
+                                                        } else {
+                                                            return null
+                                                        }
+                                                    })
+                                                }</td>
                                                 <td>
                                                     <Button
                                                         size="sm"
@@ -217,7 +244,7 @@ export default function Dashboard() {
                                                 <td>
                                                     <Button
                                                         size="sm"
-                                                        variant="success"
+                                                        variant="secondary"
                                                         onClick={() => handleRepay(
                                                             reserve.pool.address,
                                                             reserve.reserve.asset,
