@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { config } from './utils/constants';
 import { initContract, initLoggedIn } from './utils/init';
 
 if (
     typeof window.ethereum !== 'undefined' &&
     window.ethereum.selectedAddress &&
-    window.ethereum.isConnected()
+    window.ethereum.isConnected() &&
+    Number(window.chainId) !== config.chainId
 ) {
     initContract()
         .then(() => {

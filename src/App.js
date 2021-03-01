@@ -14,6 +14,7 @@ import CreatePool from './components/CreatePool';
 import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
 import Transaction from './components/Transaction';
+import TokenFaucet from './components/TokenFaucet';
 
 export default function App() {
     const routes = (
@@ -35,6 +36,9 @@ export default function App() {
             </Route>
             <Route path="/tx/:userAddress" exact>
                 <Transaction />
+            </Route>
+            <Route path="/faucet" exact>
+                <TokenFaucet />
             </Route>
             <Redirect to="/" />
         </Switch>

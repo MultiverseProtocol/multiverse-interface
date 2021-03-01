@@ -35,6 +35,8 @@ export default function Header() {
                     {/* <Nav.Link href="#swap-token">Swap Token</Nav.Link> */}
                     <Nav.Link href="#dashboard">Dashboard</Nav.Link>
                     <Nav.Link href="#create-pool">Create Pool</Nav.Link>
+                    <Nav.Link href="#faucet">Token Faucet</Nav.Link>
+
                 </Nav>
                 <Nav>
                     <Image

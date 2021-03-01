@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import AlertModal from "../Utils/AlertModal";
 import SuccessModal from "../Utils/SuccessModal";
-import metamask from "../../assets/metamask.png";
 import history from "../Utils/history";
 import {
     Row,
     Col,
     Form,
     Card,
-    Image,
     Button,
     CardDeck,
     Dropdown,
     DropdownButton,
 } from "react-bootstrap";
 import {
+    config,
     defaultInterestRateStrategyAddress,
 } from "../../utils/constants";
 import * as Erc20Abi from "../../abis/Erc20Abi.json";
 import { assets } from "../../utils/assets";
+import MetaMaskError from "../Utils/MetaMaskError";
 
 export default function CreatePool() {
     const [processing, setProcessing] = useState(false);
@@ -196,7 +196,9 @@ export default function CreatePool() {
 
     useEffect(() => {
         if (typeof window.ethereum === 'undefined' ||
-            !window.ethereum.selectedAddress
+            !window.ethereum.isConnected() ||
+            !window.ethereum.selectedAddress ||
+            Number(window.chainId) !== config.networkId
         ) {
             setShowMetamaskError(true);
         }
@@ -212,29 +214,7 @@ export default function CreatePool() {
                         history.push('/');
                     }}
                 >
-                    <div>
-                        {typeof window.ethereum === 'undefined' ?
-                            <div>
-                                You can't use these features without Metamask.
-                                <br />
-                                Please install
-                                <Image
-                                    width="50px"
-                                    src={metamask}
-                                ></Image>
-                                first !!
-                            </div>
-                            :
-                            <div>
-                                Please connect to
-                                <Image
-                                    width="50px"
-                                    src={metamask}
-                                ></Image>
-                                to use this feature !!
-                            </div>
-                        }
-                    </div>
+                   <MetaMaskError />
                 </AlertModal>
                 :
                 <CardDeck>

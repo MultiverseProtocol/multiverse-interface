@@ -16,7 +16,18 @@ export async function initContract() {
         { from: window.userAddress }
     );
 
+    window.tokenFaucet = new window.web3.eth.Contract(
+        config.tokenFaucetAbi,
+        config.tokenFaucetAddress,
+        { from: window.userAddress }
+    );
+    
+    window.chainId = window.ethereum.chainId;
     window.ethInitialized = true;
+
+    window.ethereum.on('chainChanged', () => {
+        window.location.reload();
+    });
 
     window.ethereum.on('accountsChanged', () => {
         window.location.reload();
@@ -26,13 +37,17 @@ export async function initContract() {
 export async function initLoggedIn() {
     const accounts = await window.ethereum
         .request({ method: 'eth_accounts' });
-
+    
     if (
         typeof window.ethereum !== 'undefined'
         && accounts > 0
     ) {
         await initContract();
     }
+
+    window.ethereum.on('chainChanged', () => {
+        window.location.reload();
+    });
 
     window.ethereum.on('accountsChanged', () => {
         window.location.reload();

@@ -16,7 +16,7 @@ export const assets = [
         address: "0xD0d76886cF8D952ca26177EB7CfDf83bad08C00C",
     }, {
         symbol: "LINK",
-        address: "0xa36085F69e2889c224210F603D836748e7dC0088",
+        address: "0xAD5ce863aE3E4E9394Ab43d4ba0D80f419F61789",
     }, {
         symbol: "YFI",
         address: "0xb7c325266ec274fEb1354021D27FA3E3379D840d",
@@ -56,5 +56,33 @@ export const assets = [
     }, {
         symbol: "BUSD",
         address: "0x4c6E1EFC12FDfD568186b7BAEc0A43fFfb4bCcCf",
+    }
+]
+
+export const faucetAssets = [
+    {
+        symbol: "DAI",
+        address: "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD",
+    }, {
+        symbol: "USDC",
+        address: "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
+    }, {
+        symbol: "ZRX",
+        address: "0xD0d76886cF8D952ca26177EB7CfDf83bad08C00C",
+    }, {
+        symbol: "USDT",
+        address: "0x13512979ADE267AB5100878E2e0f485B568328a4",
+    }, {
+        symbol: "BUSD",
+        address: "0x4c6E1EFC12FDfD568186b7BAEc0A43fFfb4bCcCf",
+    }, {
+        symbol: "MANA",
+        address: "0x738Dc6380157429e957d223e6333Dc385c85Fec7",
+    }, {
+        symbol: "REN",
+        address: "0x5eebf65A6746eed38042353Ba84c8e37eD58Ac6f",
+    }, {
+        symbol: "BAT",
+        address: "0x2d12186Fbb9f9a8C28B3FfdD4c42920f8539D738",
     }
 ]

@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-    Card, Image,
-    CardDeck, Table, Button,
-} from "react-bootstrap";
 import Deposit from "../Deposit";
 import Borrow from "../Borrow";
 import Repay from "../Repay";
@@ -11,11 +7,13 @@ import history from "../Utils/history";
 import Loading from "../Utils/Loading";
 import AlertModal from "../Utils/AlertModal";
 import SuccessModal from "../Utils/SuccessModal";
-import metamask from "../../assets/metamask.png";
 import { thegraph } from "../../utils/thegraph";
 import { Link } from "react-router-dom";
-import * as LendingPool from "../../abis/LendingPool.json";
 import { precision } from "../../utils/precision";
+import { config } from "../../utils/constants";
+import MetaMaskError from "../Utils/MetaMaskError";
+import * as LendingPool from "../../abis/LendingPool.json";
+import {Card,CardDeck, Table, Button} from "react-bootstrap";
 
 export default function Dashboard() {
     let routes;
@@ -105,7 +103,8 @@ export default function Dashboard() {
     useEffect(() => {
         if (typeof window.ethereum === 'undefined' ||
             !window.ethereum.isConnected() ||
-            !window.ethereum.selectedAddress
+            !window.ethereum.selectedAddress ||
+            Number(window.chainId) !== config.networkId
         ) {
             setLoading(false);
             setShowMetamaskError(true);
@@ -113,7 +112,8 @@ export default function Dashboard() {
 
         if (typeof window.ethereum !== 'undefined' &&
             window.ethereum.selectedAddress &&
-            window.ethereum.isConnected()
+            window.ethereum.isConnected() &&
+            Number(window.chainId) === config.networkId
         ) {
             fetchContractData();
         }
@@ -133,23 +133,7 @@ export default function Dashboard() {
                             history.push('/');
                         }}
                     >
-                        <div>
-                            {typeof window.ethereum === 'undefined' ?
-                                <div>
-                                    You can't use these features without Metamask.
-                                <br />
-                                Please install
-                                <Image width="50px" src={metamask}></Image>
-                                first !!
-                            </div>
-                                :
-                                <div>
-                                    Please connect to
-                                <Image width="50px" src={metamask}></Image>
-                                to use this feature !!
-                            </div>
-                            }
-                        </div>
+                        <MetaMaskError />
                     </AlertModal>
                     :
                     <CardDeck>
