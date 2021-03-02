@@ -24,8 +24,8 @@ export default function HomePage() {
     const getPools = async () => {
         thegraph.fetchLendingPools()
             .then((pools) => {
+                setAllPools([...allPools, ...pools]);
                 createSubArray(pools);
-                setAllPools(pools);
             })
             .catch((error) => {
                 console.log(error);
@@ -37,7 +37,7 @@ export default function HomePage() {
         let newList = [];
 
         if (e.target.value !== "") {
-            currentList = allPools;
+            currentList = [...currentList, ...allPools];
 
             newList = currentList.filter(reserve => {
                 const value = reserve.reserves.filter(element => {
@@ -61,7 +61,7 @@ export default function HomePage() {
                 }
             });
         } else {
-            newList = allPools;
+            newList = [...newList, ...allPools];
         }
 
         createSubArray(newList);

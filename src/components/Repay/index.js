@@ -95,7 +95,7 @@ export default function Repay({
                     setSuccessModal({
                         open: true,
                         msg: "Congratulations 🎉 !! " +
-                            "Withdraw Successful !!",
+                            "Repay Successful !!",
                     });
                 })
                 .catch((error) => {

@@ -214,7 +214,7 @@ export default function CreatePool() {
                         history.push('/');
                     }}
                 >
-                   <MetaMaskError />
+                    <MetaMaskError />
                 </AlertModal>
                 :
                 <CardDeck>
@@ -287,7 +287,7 @@ export default function CreatePool() {
                                                         style={{ width: "80%" }}
                                                         type="number"
                                                         step="0"
-                                                        placeholder="Loan To Value %"
+                                                        placeholder="Eg. 70 (For 70%)"
                                                         name="ltv"
                                                         onChange={(e) => handleChange(i, e)}
                                                         value={el.value}
@@ -306,7 +306,7 @@ export default function CreatePool() {
                                                         style={{ width: "80%" }}
                                                         type="number"
                                                         step="0"
-                                                        placeholder="Liquidation Threshold %"
+                                                        placeholder="Eg. 75 (For 75%)"
                                                         name="liquidationThreshold"
                                                         onChange={(e) => handleChange(i, e)}
                                                         value={el.value}
@@ -325,7 +325,7 @@ export default function CreatePool() {
                                                         style={{ width: "80%" }}
                                                         type="number"
                                                         step="0"
-                                                        placeholder="Liquidation Bonus %"
+                                                        placeholder="Eg. 5 (For 5%)"
                                                         name="liquidationBonus"
                                                         onChange={(e) => handleChange(i, e)}
                                                         value={el.value}
