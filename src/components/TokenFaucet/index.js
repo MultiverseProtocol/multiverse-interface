@@ -11,7 +11,6 @@ import { Button, Card, CardDeck, } from "react-bootstrap";
 export default function TokenFaucet() {
     const [tokens, setTokens] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [processing, setProcessing] = useState(false);
 
     const [errorModal, setErrorModal] = useState({
         msg: "",
@@ -30,13 +29,21 @@ export default function TokenFaucet() {
             .claimTestTokens(tokenAddress)
             .send()
             .on('transactionHash', () => {
-                setProcessing(true);
+                setSuccessModal({
+                    open: true,
+                    msg: "Please wait for " +
+                        "transaction to confirm !!",
+                });
             })
             .on('receipt', (_) => {
-                setProcessing(false);
+                checkIsAlreadyClaimed();
+                setSuccessModal({
+                    open: true,
+                    msg: "Congratulations 🎉 !! " +
+                        "Token claimed successfully !!",
+                });
             })
             .catch((error) => {
-                setProcessing(false);
                 setErrorModal({
                     open: true,
                     msg: error.message,
@@ -139,16 +146,7 @@ export default function TokenFaucet() {
                             }
                             disabled={Number(token.balance) === 0 ? true : false}
                         >
-                            {processing ?
-                                <div className="d-flex align-items-center">
-                                    Processing
-                                <span className="loading ml-2"></span>
-                                </div>
-                                :
-                                <div>
-                                    GET {token.claimAmount} {token.symbol}
-                                </div>
-                            }
+                            GET {token.claimAmount} {token.symbol}
                         </Button>
                     </Card.Body>
                     :
